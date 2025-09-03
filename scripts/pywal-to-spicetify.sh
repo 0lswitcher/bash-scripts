@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# pywal-to-spicetify.sh - convert current pywal theme to spicetify
 
 WAL_COLORS="$HOME/.cache/wal/colors.json"
 COLOR_INI="$HOME/.config/spicetify/Themes/text/color.ini"
