@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
+# theme-picker.sh - select theme with fzf, feh, and pywal
 
 THEME_DIR="$HOME/stuff/themes"
 PREVIEW_IMG="$HOME/.cache/fzf_theme_preview.png"
 DEBOUNCE_FILE="/tmp/fzf_theme_debounce"
 
-# Gather themes (.sh files) and sort them alphabetically
+# gather themes (.sh files) and sort them alphabetically
 mapfile -t THEMES < <(find "$THEME_DIR" -maxdepth 1 -type f -name '*.sh' -printf '%f\n' | sort)
 
 cleanup() {
@@ -19,7 +20,7 @@ trap cleanup EXIT
     exit 1
 }
 
-# Initialize preview with first theme
+# initialize preview with first theme
 basename="${THEMES[0]%.sh}"
 ln -sf "$THEME_DIR/$basename.png" "$PREVIEW_IMG"
 
