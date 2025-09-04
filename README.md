@@ -41,14 +41,14 @@ bash-scripts/
 
 | Script          | Description | Required Dependencies |
 |-----------------|-------------|------------|
-| [Background Picker](scripts/background-picker.sh) | Background / wallpaper picker | fzf, feh, swww |
-| [Theme Picker](scripts/theme-picker.sh) | Theme picker | fzf, feh, pywal |
-| [Cya Downloads](scripts/cya-downloads.sh) | Say goodbye to dumb Downloads folders appearing in your $HOME dir | none |
-| [Pywal to Spicetifty](scripts/pywal-to-spicetify.sh) | Converts current Pywal theme to a Spicetify theme | pywal, spicetify, cat |
-| [Random Background](scripts/random-background.sh) | Random background / wallpaper picker | swww |
-| [SWWW as theme](scripts/swww-as-theme.sh) | Converts current background / wallpaper into Pywal theme | current-swww-img (reference background-picker.sh, you can easily generate this yourself any way you desire) |
-| [Workspace Previews (Capture)](scripts/workspace-previews-capture.sh) | Mini workspace previews (capturer) | hyprland, hyprshot |
-| [Workspace Previews (Popup)](scripts/workspace-previews-popup.sh) | Mini workspace previews (display popups) | feh, cat, workspace-previews-capture.sh |
+| [background-picker.sh](scripts/background-picker.sh) | Background / wallpaper picker | fzf, feh, swww |
+| [theme-picker.sh](scripts/theme-picker.sh) | Theme picker | fzf, feh, pywal |
+| [cya-downloads.sh](scripts/cya-downloads.sh) | Say goodbye to dumb Downloads folders appearing in your $HOME dir | none |
+| [pywal-to-spicetify.sh](scripts/pywal-to-spicetify.sh) | Converts current Pywal theme to a Spicetify theme | pywal, spicetify, cat |
+| [random-background.sh](scripts/random-background.sh) | Random background / wallpaper picker | swww |
+| [swww-as-theme.sh](scripts/swww-as-theme.sh) | Converts current background / wallpaper into Pywal theme | current-swww-img (reference background-picker.sh, you can easily generate this yourself any way you desire) |
+| [workspace-previews-capture.sh](scripts/workspace-previews-capture.sh) | Mini workspace previews (capturer) | hyprland, hyprshot |
+| [workspace-previews-popup.sh](scripts/workspace-previews-popup.sh) | Mini workspace previews (display popups) | feh, cat, workspace-previews-capture.sh |
 
 ---
 
