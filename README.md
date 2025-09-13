@@ -30,7 +30,46 @@ bash-scripts/
 |  ├── swww-as-theme.sh 
 |  ├── theme-picker.sh 
 |  ├── workspace-previews-capture.sh 
-|  └── workspace-previews-popup.sh 
+|  └── workspace-previews-popup.sh
+├── themes/
+|  ├── base16-apathy.png 
+|  ├── base16-apathy.sh
+|  ├── base16-ashes.png
+|  ├── base16-ashes.sh
+|  ├── base16-atalier-estuary.png
+|  ├── base16-atalier-estuary.sh
+|  ├── base16-codeschool.png
+|  ├── base16-codeschool.sh
+|  ├── base16-dracula.png
+|  ├── base16-dracula.sh
+|  ├── base16-greenscreen.png
+|  ├── base16-greenscreen.sh
+|  ├── base16-gruvbox-hard.png
+|  ├── base16-gruvbox-hard.sh
+|  ├── base16-gruvbox-medium.png
+|  ├── base16-gruvbox-medium.sh
+|  ├── base16-harmonic.png
+|  ├── base16-harmonic.sh
+|  ├── base16-icy.png
+|  ├── base16-icy.sh
+|  ├── base16-materia.png
+|  ├── base16-materia.sh
+|  ├── base16-material-palenight.png
+|  ├── base16-material-palenight.sh
+|  ├── base16-mellow-purple.png
+|  ├── base16-mellow-purple.sh
+|  ├── base16-mocha.png
+|  ├── base16-mocha.sh
+|  ├── base16-monokai.png
+|  ├── base16-monokai.sh
+|  ├── base16-nord.png
+|  ├── base16-nord.sh
+|  ├── base16-ocean.png
+|  ├── base16-ocean.sh
+|  ├── base16-rebecca.png
+|  ├── base16-rebecca.sh
+|  ├── dkeg-amiox.png
+|  └── dkeg-amiox.sh
 ├── LICENSE 
 └── README.md 
 ```
@@ -42,7 +81,7 @@ bash-scripts/
 | Script          | Description | Required Dependencies |
 |-----------------|-------------|------------|
 | [background-picker.sh](scripts/background-picker.sh) | Background / wallpaper picker | fzf, feh, swww |
-| [theme-picker.sh](scripts/theme-picker.sh) | Theme picker | fzf, feh, pywal |
+| [theme-picker.sh](scripts/theme-picker.sh) | Theme picker | fzf, feh, pywal, themes folder |
 | [cya-downloads.sh](scripts/cya-downloads.sh) | Say goodbye to dumb Downloads folders appearing in your $HOME dir | none |
 | [pywal-to-spicetify.sh](scripts/pywal-to-spicetify.sh) | Converts current Pywal theme to a Spicetify theme | pywal, spicetify, cat |
 | [random-background.sh](scripts/random-background.sh) | Random background / wallpaper picker | swww |
@@ -59,7 +98,9 @@ bash-scripts/
 Line 80 appends a file with the current selected background. This can be used for a number of things, I personally used it in the swww-as-theme.sh script.
 
 # Theme Picker
-Similar to background-picker.sh, Line 66 appends a file with the current selected theme. This can be used for a number of things, feel free to experiment!.
+~~Similar to background-picker.sh, Line 66 appends a file with the current selected theme. This can be used for a number of things, feel free to experiment!.~~  
+Rather than appending to a file with the selected theme, I updated it so that it runs pywal-to-spicetify.sh on line 65. 
+Feel free to comment this line out and modify as you please.
 
 # Cya Downloads
 This checks for both Capitalized (Downloads) and lowercase (downloads) folders hanging out in $HOME. Moves any files within to a desired location (with confirmation) before deleting the folders. Run manually, or schedule to run on a regular basis!
