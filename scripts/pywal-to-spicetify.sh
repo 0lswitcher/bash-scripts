@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-# pywal-to-spicetify.sh - convert current pywal theme to spicetify
+#!/bin/bash
 
 WAL_COLORS="$HOME/.cache/wal/colors.json"
 COLOR_INI="$HOME/.config/spicetify/Themes/text/color.ini"
@@ -45,4 +44,7 @@ spicetify config color_scheme Pywal
 
 # apply it
 spicetify apply
+
+# remind the user to manually open spotify
+sleep 2 && notify-send "Open Spotify to see the new look :)"
 

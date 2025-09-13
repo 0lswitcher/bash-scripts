@@ -10,9 +10,9 @@ mapfile -t BACKGROUNDS < <(find "$BACKGROUND_DIR" -maxdepth 1 -type f \( -iname 
 clear
 
 cleanup() {
-    # kill feh preview if running
+    # Kill feh preview if running
     pkill -f "feh --title fzf-background-preview" 2>/dev/null
-    # remove preview image symlink
+    # Remove preview image symlink
     rm -f "$PREVIEW_IMG"
     rm -f "$DEBOUNCE_FILE"
 }

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # configuration
 START_X_LEFT=20          # X position of the first icon on the LEFT monitor

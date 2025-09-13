@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# theme-picker.sh - select theme with fzf, feh, and pywal
 
 THEME_DIR="$HOME/stuff/themes"
 PREVIEW_IMG="$HOME/.cache/fzf_theme_preview.png"
@@ -63,8 +62,7 @@ selected=$(printf '%s\n' "${THEMES[@]}" | fzf \
 if [ -n "$selected" ]; then
     CURRENT_THEME=$(<"$THEME_DIR/$selected")
     bash "$THEME_DIR/$selected"
-    bash "$HOME/stuff/coding/bash/scripts/pywal-to-spicetify.sh"
-    echo "$CURRENT_THEME" > /home/y2k/.cache/current-pywal-theme
+    bash "$HOME/stuff/dev/bash/scripts/pywal-to-spicetify.sh"
 fi
 
 cleanup

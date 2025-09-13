@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-# cya-downloads.sh - fuck off pos Downloads folder you're like the immortal snail
+#!/bin/bash
 
 # define directories
 DOWNLOADS_DIR="/home/y2k/Downloads"
