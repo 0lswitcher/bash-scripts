@@ -24,7 +24,10 @@ bash-scripts/
 ├── md-assets/ 
 ├── scripts/
 |  ├── background-picker.sh 
+|  ├── backup.sh
 |  ├── cya-downloads.sh
+|  ├── got-git?.sh
+|  ├── nix-bootstrap.sh 
 |  ├── pywal-to-spicetify.sh 
 |  ├── random-background.sh 
 |  ├── swww-as-theme.sh 
@@ -81,8 +84,11 @@ bash-scripts/
 | Script          | Description | Required Dependencies |
 |-----------------|-------------|------------|
 | [background-picker.sh](scripts/background-picker.sh) | Background / wallpaper picker | fzf, feh, swww |
+| [backup.sh](scripts/backup.sh) | Backup files and directories easily | none |
 | [theme-picker.sh](scripts/theme-picker.sh) | Theme picker | fzf, feh, pywal, themes folder |
 | [cya-downloads.sh](scripts/cya-downloads.sh) | Say goodbye to dumb Downloads folders appearing in your $HOME dir | none |
+| [got-git?.sh](scripts/got-git?.sh) | Check which dirs are git repos and show their status | git |
+| [nix-bootstrap.sh](scripts/nix-bootstrap.sh) | Bootstrap NixOS w/ lots of options | none |
 | [pywal-to-spicetify.sh](scripts/pywal-to-spicetify.sh) | Converts current Pywal theme to a Spicetify theme | pywal, spicetify, cat |
 | [random-background.sh](scripts/random-background.sh) | Random background / wallpaper picker | swww |
 | [swww-as-theme.sh](scripts/swww-as-theme.sh) | Converts current background / wallpaper into Pywal theme | current-swww-img (reference background-picker.sh, you can easily generate this yourself any way you desire) |
@@ -97,13 +103,40 @@ bash-scripts/
 # Background Picker
 Line 80 appends a file with the current selected background. This can be used for a number of things, I personally used it in the swww-as-theme.sh script.
 
-# Theme Picker
-~~Similar to background-picker.sh, Line 66 appends a file with the current selected theme. This can be used for a number of things, feel free to experiment!.~~  
-Rather than appending to a file with the selected theme, I updated it so that it runs pywal-to-spicetify.sh on line 65. 
-Feel free to comment this line out and modify as you please.
+# Backup
+Checks to see if I'm running the script, if not it runs in a configuration with standard `xdg-usr-dirs` and options designed more around general usage. Also contains a custom option so you can backup whatever you want to wherever you want.
 
 # Cya Downloads
 This checks for both Capitalized (Downloads) and lowercase (downloads) folders hanging out in $HOME. Moves any files within to a desired location (with confirmation) before deleting the folders. Run manually, or schedule to run on a regular basis!
+
+# Got Git?
+The `$BASE_DIR` var is used for the directory that holds the majority of your github repositories, (typically if you're a dev) and the `$EXTRA_DIRS` var is used for seperate directories that have git initialized at root. (Typically for dotfiles or other GNU Stow managed repositories.)
+
+# Nix(OS) Bootstrap
+A complete NixOS system bootstrap designed to be ran post .iso installation and drive formatting. \
+Allows for online or even offline installation the if repo files are held on usb or already on your system. \
+<br>
+Currently has 3 configuration profiles:
+> `Server`, `Minimal`, and `Full`. \
+> (Ranked in order of smallest to largest final size) 
+
+And 2 hardware profiles:
+>`Desktop`, `Laptop` \
+(Does not effect `hardware-configuration.nix`, only additional dotfiles.)
+
+Configures the following:
+- username
+- hostname
+- configuration.nix
+  - env.systemPackages
+  - system.stateVersion
+- dotfiles
+  - hyprland
+  - waybar
+  - theming
+  - lots n lots more
+- $HOME directory 
+- wallpapers *(optional)*
 
 # Pywal to Spicetify
 Applies changes and restarts Spicetify/Spotify by default on run. This script is the reason I still theme hop. It's just fun to watch everything change when used in tandem with my other theming scripts.
@@ -113,6 +146,11 @@ Last line of the script sends a notification relaying the selected wallpaper. If
 
 # SWWW as theme
 This script works great in tandem with pywal-to-spicetify.sh, simply run that script on line 7 and now you're killin two birds w one stone.
+
+# Theme Picker
+~~Similar to background-picker.sh, Line 66 appends a file with the current selected theme. This can be used for a number of things, feel free to experiment!.~~  
+Rather than appending to a file with the selected theme, I updated it so that it runs pywal-to-spicetify.sh on line 65. 
+Feel free to comment this line out and modify as you please.
 
 # Workspace Previews (Capture & Popup)
 I missed the mini workspace preview feature of most XFCE based distros, so I made something that would work for Hyprland.  

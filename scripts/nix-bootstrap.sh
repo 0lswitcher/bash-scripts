@@ -39,7 +39,40 @@ clone_or_update_repo() {
     fi
 }
 
-# online / offline
+# welcome art
+
+cat << "EOF"
+
+                           
+       ▓▓▓    ▒▒▒  ▒▒▒      
+        ▓▓▓    ▒▒▒▒▒▒       
+     ▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒          ██████   █████  ███  
+    ▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒  ▓▓▓    ░░██████ ░░███  ░░░  
+        ▒▒▒       ▒▒▒▓▓▓      ░███░███ ░███  ████  █████ █████    
+  ▒▒▒▒▒▒▒▒         ▒▓▓▓▓▓▓▓   ░███░░███░███ ░░███ ░░███ ░░███  
+  ▒▒▒▒▒▒▒▓         ▓▓▓▓▓▓▓▓   ░███ ░░██████  ░███  ░░░█████░    
+     ▒▒▒▓▓▓       ▓▓▓         ░███  ░░█████  ░███   ███░░░███    
+    ▒▒▒  ▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒     █████  ░░█████ █████ █████ █████  
+         ▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒     ░░░░░    ░░░░░ ░░░░░ ░░░░░ ░░░░░   
+        ▓▓▓▓▓▓    ▒▒▒       
+       ▓▓▓  ▓▓▓    ▒▒▒      
+                                                                                                                    
+                                                                                         
+  ███████████                     █████             █████                                 
+ ░░███░░░░░███                   ░░███             ░░███                                  
+  ░███    ░███  ██████   ██████  ███████    █████  ███████   ████████   ██████   ████████ 
+  ░██████████  ███░░███ ███░░███░░░███░    ███░░  ░░░███░   ░░███░░███ ░░░░░███ ░░███░░███
+  ░███░░░░░███░███ ░███░███ ░███  ░███    ░░█████   ░███     ░███ ░░░   ███████  ░███ ░███
+  ░███    ░███░███ ░███░███ ░███  ░███ ███ ░░░░███  ░███ ███ ░███      ███░░███  ░███ ░███
+  ███████████ ░░██████ ░░██████   ░░█████  ██████   ░░█████  █████    ░░████████ ░███████ 
+ ░░░░░░░░░░░   ░░░░░░   ░░░░░░     ░░░░░  ░░░░░░     ░░░░░  ░░░░░      ░░░░░░░░  ░███░░░  
+                                                                                ░███     
+                                                                                █████    
+                                                                               ░░░░░     
+                                                                               
+EOF
+
+# online / offline prompt
 if ping -c 1 github.com &>/dev/null; then
     MODE=$(prompt "Choose installation mode:" "Online" "Offline")
 else
@@ -59,11 +92,11 @@ else
     REPO_DIR="$OFFLINE_PATH"
 fi
 
-# install type
+# install type prompt
 INSTALL_TYPE=$(prompt "Select installation type:" "Server" "Minimal" "Full")
 echo "Selected installation type: $INSTALL_TYPE"  # debug output
 
-# hardware type
+# hardware type prompt
 HW_TYPE=$(prompt "Select hardware:" "Desktop" "Laptop")
 echo "Selected hardware type: $HW_TYPE"  # debug output
 

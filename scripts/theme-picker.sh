@@ -8,43 +8,43 @@ DEBOUNCE_FILE="/tmp/fzf_theme_debounce"
 mapfile -t THEMES < <(find "$THEME_DIR" -maxdepth 1 -type f -name '*.sh' -printf '%f\n' | sort)
 
 cleanup() {
-    pkill -f "feh --title fzf-theme-preview" 2>/dev/null
-    rm -f "$PREVIEW_IMG"
-    rm -f "$DEBOUNCE_FILE"
+  pkill -f "feh --title ThemePreview" 2>/dev/null
+  rm -f "$PREVIEW_IMG"
+  rm -f "$DEBOUNCE_FILE"
 }
 trap cleanup EXIT
 
 [ ${#THEMES[@]} -eq 0 ] && {
-    echo "No themes found in $THEME_DIR"
-    exit 1
+  echo "No themes found in $THEME_DIR"
+  exit 1
 }
 
 # initialize preview with first theme
 basename="${THEMES[0]%.sh}"
 ln -sf "$THEME_DIR/$basename.png" "$PREVIEW_IMG"
 
-feh --title fzf-theme-preview --geometry 645x589+600+250 --scale-down --image-bg black --reload 1 --no-menus "$PREVIEW_IMG" &
+feh --title ThemePreview --geometry 645x589+600+250 --scale-down --image-bg black --reload 1 --no-menus "$PREVIEW_IMG" &
 FEH_PID=$!
 
 preview_cmd() {
-    local scriptname="$1"
-    local base="${scriptname%.sh}"
-    local imgpath="$THEME_DIR/$base.png"
+  local scriptname="$1"
+  local base="${scriptname%.sh}"
+  local imgpath="$THEME_DIR/$base.png"
 
-    [ ! -f "$imgpath" ] && return
+  [ ! -f "$imgpath" ] && return
 
-    local now=$(date +%s%3N)
-    if [ -f "$DEBOUNCE_FILE" ]; then
-        local last_update
-        last_update=$(cat "$DEBOUNCE_FILE")
-        local diff=$((now - last_update))
-        if (( diff < 200 )); then
-            return
-        fi
+  local now=$(date +%s%3N)
+  if [ -f "$DEBOUNCE_FILE" ]; then
+    local last_update
+    last_update=$(cat "$DEBOUNCE_FILE")
+    local diff=$((now - last_update))
+    if ((diff < 200)); then
+      return
     fi
+  fi
 
-    ln -sf "$imgpath" "$PREVIEW_IMG"
-    echo "$now" > "$DEBOUNCE_FILE"
+  ln -sf "$imgpath" "$PREVIEW_IMG"
+  echo "$now" >"$DEBOUNCE_FILE"
 }
 
 export -f preview_cmd
@@ -53,17 +53,17 @@ export PREVIEW_IMG
 export DEBOUNCE_FILE
 
 selected=$(printf '%s\n' "${THEMES[@]}" | fzf \
-    --height=100% --border --prompt=" Choose theme: " \
-    --preview "bash -c 'preview_cmd {}'" \
-    --preview-window=right:0%:wrap \
-    --bind "enter:accept" \
-    --cycle)
+  --height=100% --border --prompt=" Choose theme: " \
+  --preview "bash -c 'preview_cmd {}'" \
+  --preview-window=right:0%:wrap \
+  --bind "enter:accept" \
+  --cycle)
 
+# update current theme and spicetify
 if [ -n "$selected" ]; then
-    CURRENT_THEME=$(<"$THEME_DIR/$selected")
-    bash "$THEME_DIR/$selected"
-    bash "$HOME/stuff/dev/bash/scripts/pywal-to-spicetify.sh"
+  CURRENT_THEME=$(<"$THEME_DIR/$selected")
+  bash "$THEME_DIR/$selected"
+  bash "$HOME/stuff/dev/bash/scripts/pywal-to-spicetify.sh"
 fi
 
 cleanup
-
