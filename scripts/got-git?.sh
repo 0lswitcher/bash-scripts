@@ -2,10 +2,6 @@
 # got-git?.sh - check which dirs are git repos and show their status
 
 BASE_DIR="$HOME/stuff/dev/git"
-EXTRA_DIRS=(
-  "$HOME/dotfiles"
-  "$HOME/dotfiles-private"
-)
 
 # ANSI colors
 RED="\033[0;31m"
@@ -16,10 +12,10 @@ CYAN="\033[0;36m"
 BOLD="\033[1m"
 RESET="\033[0m"
 
-echo -e "${BOLD}Scanning $BASE_DIR & $EXTRA_DIRS...${RESET}"
+echo -e "${BOLD}Scanning $BASE_DIR...${RESET}"
 echo
 
-for dir in "$BASE_DIR"/* "${EXTRA_DIRS[@]}"; do
+for dir in "$BASE_DIR"/*; do
   if [ -d "$dir" ]; then
     cd "$dir" || continue
 

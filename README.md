@@ -110,7 +110,8 @@ Checks to see if I'm running the script, if not it runs in a configuration with 
 This checks for both Capitalized (Downloads) and lowercase (downloads) folders hanging out in $HOME. Moves any files within to a desired location (with confirmation) before deleting the folders. Run manually, or schedule to run on a regular basis!
 
 # Got Git?
-The `$BASE_DIR` var is used for the directory that holds the majority of your github repositories, (typically if you're a dev) and the `$EXTRA_DIRS` var is used for seperate directories that have git initialized at root. (Typically for dotfiles or other GNU Stow managed repositories.)
+~~The `$BASE_DIR` var is used for the directory that holds the majority of your github repositories, (typically if you're a dev) and the `$EXTRA_DIRS` var is used for seperate directories that have git initialized at root. (Typically for dotfiles or other GNU Stow managed repositories.)~~\
+Removed `$EXTRA_DIRS` in favor of symlinking any seperate repo's to `$BASE_DIR`
 
 # Nix(OS) Bootstrap
 A complete NixOS system bootstrap designed to be ran post .iso installation and drive formatting. \
@@ -124,19 +125,24 @@ And 2 hardware profiles:
 >`Desktop`, `Laptop` \
 (Does not effect `hardware-configuration.nix`, only additional dotfiles.)
 
-Configures the following:
-- username
-- hostname
-- configuration.nix
-  - env.systemPackages
-  - system.stateVersion
-- dotfiles
-  - hyprland
-  - waybar
-  - theming
-  - lots n lots more
-- $HOME directory 
-- wallpapers *(optional)*
+Which configures the following:
+> - username
+> - hostname
+> - `configuration.nix`
+>   - `environment.systemPackages`
+>   - `environment.sessionVariables`
+>   - `programs`
+>   - `services`
+>   - `system.stateVersion`
+> - dotfiles
+>   - hyprland
+>   - waybar
+>   - theming
+>   - lots n lots more
+> - `$HOME` directory 
+> - wallpapers *(optional)*
+
+For a more verbose writeup on nix-bootstrap.sh, please visit [my nixfiles repository](https://github.com/0lswitcher/nixfiles)
 
 # Pywal to Spicetify
 Applies changes and restarts Spicetify/Spotify by default on run. This script is the reason I still theme hop. It's just fun to watch everything change when used in tandem with my other theming scripts.
