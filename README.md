@@ -18,6 +18,20 @@
 
 ---
 
+> [!TIP]
+> Check out the new [backup.sh](scripts/backup.sh)!
+
+> [!WARNING]
+> This repo is getting another massive overhaul, (on top of the recent overhaul commit) \
+> including some optimized scripts, some reworked scripts, and one new one. (you'll fw it trust) \
+> I also finally standardized POSIX compliance so everything is more portable, pure, and theoretically faster. \
+> This should all release within a month of writing this, (05/28/26) so stay tuned!
+> 
+> Until then, please refrain from using nix-bootstrap.sh on a machine you care about until I verify this build \
+> on multiple machines, as of now consider it in beta. Thanks!
+
+---
+
 ## Repository Structure
 ```
 bash-scripts/
