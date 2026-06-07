@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
+# background-picker.sh - wallpaper selection w/ fzf and image previews
+# USAGE: foot/kitty/alacritty -T WallpaperPicker bash ~/path/to/background-picker.sh
 
-BACKGROUND_DIR="$HOME/stuff/pictures/backgrounds"
+BACKGROUND_DIR="$HOME/stuff/pictures/wallpapers/all"
 PREVIEW_IMG="$HOME/.cache/fzf_background_preview.jpg"
 DEBOUNCE_FILE="/tmp/fzf_background_debounce"
 
@@ -65,6 +67,7 @@ export DEBOUNCE_FILE
 
 selected=$(printf '%s\n' "${BACKGROUND_DIR}/${BACKGROUNDS[@]}" | xargs -n1 basename | fzf \
   --height=100% --border --prompt=" Choose background: " \
+  --layout=reverse \
   --preview "bash -c 'preview_cmd {}'" \
   --preview-window=right:0%:wrap \
   --bind "enter:accept" \
@@ -75,14 +78,24 @@ if [ -z "$selected" ]; then
   exit 0
 fi
 
-swww img "$BACKGROUND_DIR/$selected" --transition-type grow --transition-pos 950,0 --transition-step 255 --transition-fps 60 --transition-duration 2.5
+# set the background w/ awww (swww has been deprecated)
+awww img "$BACKGROUND_DIR/$selected" --transition-type grow --transition-pos 950,0 --transition-step 255 --transition-fps 60 --transition-duration 2.5
 
-notify-send "Wallpaper Updated :)"
+# check if notify-send exists before running it
+if command -v notify-send >/dev/null 2>&1; then
+  notify-send "Background Updated :)"
+else
+  echo "Background Updated :)"
+fi
 
-echo "$BACKGROUND_DIR/$selected" >~/.cache/current-swww-img
+# updated cached file w/ current image dir
+echo "$BACKGROUND_DIR/$selected" >~/.cache/current-awww-img
 
-pcmanfm-qt --set-wallpaper "$BACKGROUND_DIR/$selected"
-
-notify-send "Current wallpaper cache updated." "You can find it at: \n (~/.cache/current-swww-img) \nUpdated with: \n '$BACKGROUND_DIR/$selected'"
+# pcmanfm-qt is not my default wallpaper manager,
+# but i use it for pcmanfm-qt --desktop mode for when
+# i have non-technical users on my machine
+if command -v pcmanfm-qt >/dev/null 2>&1; then
+  pcmanfm-qt --set-wallpaper "$BACKGROUND_DIR/$selected"
+fi
 
 cleanup

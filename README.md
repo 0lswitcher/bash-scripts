@@ -19,16 +19,23 @@
 ---
 
 > [!TIP]
-> Check out the new [backup.sh](scripts/backup.sh)!
+> **Updates:** \
+> Check out the new [`pywal-to-glance.sh`](scripts/pywal-to-glance.sh) script! \
+> Check out the new [`pywal-to-kando.sh`](scripts/pywal-to-kando.sh) script! \
+> Check out the new [`pywal-wrapper.sh`](scripts/pywal-wrapper.sh) script! \
+> Check out the new [`colorscheme-picker.sh`](scripts/colorscheme-picker.sh) script! (Replaces previous `theme-picker.sh` script) \
+> Check out the new [`workspace-previews-wrapper.sh`](scripts/workspace-previews-wrapper.sh) script! \
+> \
+> Replaced all instances of `swww` w/ `awww` due to LGFae (*the creator of `swww`*) renaming the project. \
+> The story behind this is both hilarious and tragic-and I highly encourage you to go read the blog post \
+> regarding the renaming: [Renaming swww](https://www.lgfae.com/posts/2025-10-29-RenamingSwww.html)  \
+> \
+> Finally standardized POSIX compliance so everything is more portable, pure, and theoretically faster.
+> > *I now question my naming of the repo...may have to rename to posix or shell-scripts...*
 
 > [!WARNING]
-> This repo is getting another massive overhaul, (on top of the recent overhaul commit) \
-> including some optimized scripts, some reworked scripts, and one new one. (you'll fw it trust) \
-> I also finally standardized POSIX compliance so everything is more portable, pure, and theoretically faster. \
-> This should all release within a month of writing this, (05/28/26) so stay tuned!
-> 
-> Until then, please refrain from using nix-bootstrap.sh on a machine you care about until I verify this build \
-> on multiple machines, as of now consider it in beta. Thanks!
+> Please refrain from using nix-bootstrap.sh on a machine you care about until I verify this build \
+> on multiple machines. As of now consider it in beta. Thanks!
 
 ---
 
@@ -37,17 +44,23 @@
 bash-scripts/
 ├── md-assets/ 
 ├── scripts/
+|  ├── awww-as-theme.sh 
 |  ├── background-picker.sh 
 |  ├── backup.sh
+|  ├── colorscheme-picker.sh
 |  ├── cya-downloads.sh
 |  ├── got-git?.sh
+|  ├── kando-wrapper.sh
 |  ├── nix-bootstrap.sh 
+|  ├── pywal-to-glance.sh
+|  ├── pywal-to-kando.sh
 |  ├── pywal-to-spicetify.sh 
+|  ├── pywal-wrapper.sh
 |  ├── random-background.sh 
 |  ├── swww-as-theme.sh 
-|  ├── theme-picker.sh 
 |  ├── workspace-previews-capture.sh 
-|  └── workspace-previews-popup.sh
+|  ├── workspace-previews-popup.sh 
+|  └── workspace-previews-wrapper.sh
 ├── themes/
 |  ├── base16-apathy.png 
 |  ├── base16-apathy.sh
@@ -97,35 +110,66 @@ bash-scripts/
 
 | Script          | Description | Required Dependencies |
 |-----------------|-------------|------------|
-| [background-picker.sh](scripts/background-picker.sh) | Background / wallpaper picker | fzf, feh, swww |
+| [awww-as-theme.sh](scripts/swww-as-theme.sh) | Converts current background / wallpaper into Pywal theme | awww, current-awww-img (reference background-picker.sh, you can easily generate this yourself any way you desire) |
+| [background-picker.sh](scripts/background-picker.sh) | Background / wallpaper picker | fzf, feh, awww |
 | [backup.sh](scripts/backup.sh) | Backup files and directories easily | none |
-| [theme-picker.sh](scripts/theme-picker.sh) | Theme picker | fzf, feh, pywal, themes folder |
+| [colorscheme-picker.sh](scripts/colorscheme-picker.sh) | Colorscheme / Theme Picker | fzf, feh, pywal, themes folder |
 | [cya-downloads.sh](scripts/cya-downloads.sh) | Say goodbye to dumb Downloads folders appearing in your $HOME dir | none |
 | [got-git?.sh](scripts/got-git?.sh) | Check which dirs are git repos and show their status | git |
+| [kando-wrapper.sh](scripts/kando-wrapper.sh) | Conditionally launch kando pie menu (fix for hyprland boot) | kando, hyprland |
 | [nix-bootstrap.sh](scripts/nix-bootstrap.sh) | Bootstrap NixOS w/ lots of options | none |
-| [pywal-to-spicetify.sh](scripts/pywal-to-spicetify.sh) | Converts current Pywal theme to a Spicetify theme | pywal, spicetify, cat |
-| [random-background.sh](scripts/random-background.sh) | Random background / wallpaper picker | swww |
+| [pywal-to-glance.sh](scripts/pywal-to-glance.sh) | Converts current Pywal theme to a Glance server dashboard theme | pywal, glance |
+| [pywal-to-kando.sh](scripts/pywal-to-kando.sh) | Converts current Pywal theme to a Kando pie menu theme | pywal, jq, kando |
+| [pywal-to-spicetify.sh](scripts/pywal-to-spicetify.sh) | Converts current Pywal theme to a Spicetify theme | pywal, jq, spotify, spicetify |
+| [pywal-wrapper.sh](scripts/pywal-wrapper.sh) | Execute theme changes | pywal, waypaper* (SEE NOTE AHEAD!) |
+| [random-background.sh](scripts/random-background.sh) | Random background / wallpaper picker | awww |
 | [swww-as-theme.sh](scripts/swww-as-theme.sh) | Converts current background / wallpaper into Pywal theme | current-swww-img (reference background-picker.sh, you can easily generate this yourself any way you desire) |
-| [workspace-previews-capture.sh](scripts/workspace-previews-capture.sh) | Mini workspace previews (capturer) | hyprland, hyprshot |
-| [workspace-previews-popup.sh](scripts/workspace-previews-popup.sh) | Mini workspace previews (display popups) | feh, cat, workspace-previews-capture.sh |
+| [workspace-previews-capture.sh](scripts/workspace-previews-capture.sh) | Mini workspace previews (capturer) | hyprland, hyprshot, workspace-previews-popup.sh |
+| [workspace-previews-popup.sh](scripts/workspace-previews-popup.sh) | Mini workspace previews (display popups) | feh, workspace-previews-capture.sh |
+| [workspace-previews-wrapper.sh](scripts/workspace-previews-wrapper.sh) | Mini workspace previews (wrapper) | workspace-previews-capture.sh, workspace-previews-popup.sh |
 
 ---
 
 > [!TIP]
 > Read below for important information regarding each script.
 
+# AWWW as theme
+This script works great in tandem with `pywal-wrapper.sh`, simply run that script on line 7 and now you're theming everything w/ one script. \
+Very useful for when you don't have a wallpaper setter capable of running post commands.
+
+# SWWW as theme
+This script is largely deprecated in favor of `awww-as-theme.sh` , due to LGFae (*the creator of `swww`*) \
+renaming the project to `awww`. The story behind this is both hilarious and tragic-and I highly encourage \
+you to go read the blog post regarding the renaming: [Renaming swww](https://www.lgfae.com/posts/2025-10-29-RenamingSwww.html)
+
+I'll keep the script here for now for those who's distro's have not yet packaged awww, but this will be \
+going within the next few commits once everyone has had time to migrate. 
+
 # Background Picker
-Line 80 appends a file with the current selected background. This can be used for a number of things, I personally used it in the swww-as-theme.sh script.
+Line 80 appends a file with the current selected background. This can be used for a number of things, I personally used it in the ~~`swww-as-theme.sh`~~ `awww-as-theme.sh` script.
 
 # Backup
-Checks to see if I'm running the script, if not it runs in a configuration with standard `xdg-usr-dirs` and options designed more around general usage. Also contains a custom option so you can backup whatever you want to wherever you want.
+Checks to see if I'm running the script, if not it runs in a configuration with standard `xdg-usr-dirs` and options designed more around general usage. \
+Also contains a custom option so you can backup whatever you want to wherever you want.
+
+# Colorscheme Picker
+Custom colorscheme picker using fzf and feh. \
+Shows 19+ pywal colorschemes to choose from, with easy expandability. \
+Line 75 runs `pywal-wrapper.sh` , which executes the desired theme change across many programs.  
+- *Read ahead to Pywal Wrapper for more information*
 
 # Cya Downloads
-This checks for both Capitalized (Downloads) and lowercase (downloads) folders hanging out in $HOME. Moves any files within to a desired location (with confirmation) before deleting the folders. Run manually, or schedule to run on a regular basis!
+This checks for both Capitalized (Downloads) and lowercase (downloads) folders hanging out in $HOME. \
+Moves any files within to a desired location (with confirmation) before deleting the folders. \
+Run manually, or schedule to run on a regular basis!
 
 # Got Git?
 ~~The `$BASE_DIR` var is used for the directory that holds the majority of your github repositories, (typically if you're a dev) and the `$EXTRA_DIRS` var is used for seperate directories that have git initialized at root. (Typically for dotfiles or other GNU Stow managed repositories.)~~\
 Removed `$EXTRA_DIRS` in favor of symlinking any seperate repo's to `$BASE_DIR`
+
+# Kando Wrapper
+Relaunches the kando pie menu on first boot, since Hyprland fails to on launch. \
+Hacky fix, but works for now. Will likely become obsolete in future Kando/Hyprland releases.
 
 # Nix(OS) Bootstrap
 A complete NixOS system bootstrap designed to be ran post .iso installation and drive formatting. \
@@ -156,28 +200,64 @@ Which configures the following:
 > - `$HOME` directory 
 > - wallpapers *(optional)*
 
-For a more verbose writeup on nix-bootstrap.sh, please visit [my nixfiles repository](https://github.com/0lswitcher/nixfiles)
+For a more verbose writeup on `nix-bootstrap.sh`, please visit [my nixfiles repository](https://github.com/0lswitcher/nixfiles)
+
+# Pywal to Glance (Self-Hosted Server Dashboard)
+Updates your glance server dashboard default colorscheme with your pywal theme. \
+If your server is hosted on a headless machine that you SSH into like me, you'll need to have the filsystem mounted \
+with `SSHFS` instead of temporarily accessing w/ `SFTP` so that the script can read your `glance.yml` file.
+
+# Pywal to Kando
+Converts pywal theme to kando theme. \
+Compatable with flatpak and non-flatpak installations, just comment or uncomment lines 11 and 14 accordingly.  
+- *Set to non-flatpak/native by default*  
+
+You may also have to change the final lines of the script that handle the reloading of Kando. \
+It's in my to-do list to make this handling conditional and automatic, so stay tuned for that.
 
 # Pywal to Spicetify
-Applies changes and restarts Spicetify/Spotify by default on run. This script is the reason I still theme hop. It's just fun to watch everything change when used in tandem with my other theming scripts.
+Converts pywal theme to modified 'text' spicetify theme. \
+I'm biased, but it looks especially great with my [custom text theme](https://github.com/0lswitcher/dotfiles/tree/main/spicetify/.config/spicetify/Themes/text).  
+ - *I'm moving the spicetify theme to its own repo and publishing it to the marketplace soon,  
+ so stay tuned for that!*  
+
+# Pywal Wrapper
+What allows the newly set theme to be smoothly updated across all programs in real time. \
+Written to be quick but conditional, so programs only refresh or relaunch if they were already open. \
+If you don't have some of the programs or scripts inside, it will still run just fine. \
+All you need is pywal, and any wallpaper selector that can run post-selection commands. \
+Designed to run with waypaper, but can be easily configured.
+> *A front-end-less version is coming soon, essentially functioning as a combination  
+of `background-picker.sh` and `colorscheme-picker.sh` , I just need to update my current version.*
+
+**USAGE:** \
+`~/.config/waypaper/config.ini`
+```
+[Settings]
+...
+post_command = bash -lc '/root/path/to/pywal-wrapper.sh'
+```
+
 
 # Random Background
-Last line of the script sends a notification relaying the selected wallpaper. If you don't have a notification daemon configured, feel free to comment this line out.
-
-# SWWW as theme
-This script works great in tandem with pywal-to-spicetify.sh, simply run that script on line 7 and now you're killin two birds w one stone.
+Sets a random background. \
+Nothing too special to note besides the usual synchronization w/ other scripts.
 
 # Theme Picker
-~~Similar to background-picker.sh, Line 66 appends a file with the current selected theme. This can be used for a number of things, feel free to experiment!.~~  
-Rather than appending to a file with the selected theme, I updated it so that it runs pywal-to-spicetify.sh on line 65. 
-Feel free to comment this line out and modify as you please.
+I have removed this script for now in favor of using `waypaper` as a front-end to launch \
+`pywal-wrapper.sh` post wallpaper selection, but I am rewriting it so those who don't \
+have a wallpaper selector capable of running post-selection commands can still have the fast transitions.\
+\
+Until then, please set your wallpaper however you desire, then run `awww-as-theme.sh`.
 
 # Workspace Previews (Capture & Popup)
 I missed the mini workspace preview feature of most XFCE based distros, so I made something that would work for Hyprland.  
-These two scripts (workspace-previews-capture.sh & workspace-previews-popup.sh) depend on each other to work properly.
+These two scripts (`workspace-previews-capture.sh` & `workspace-previews-popup.sh`) depend on each other to work properly.
 
 > [!WARNING]
-> If you have multiple monitors, this script will likely fuck with your copy and paste abilities. Hyprshot simply needs some extra configuration to not copy the screenshot to the system clipboard. Hope this helps!
+> If you have multiple monitors, this script will likely fuck with your copy and paste abilities.  
+> Hyprshot simply needs some extra configuration to not copy the screenshot to the system clipboard.  
+> Hope this helps!
 
 ---
 

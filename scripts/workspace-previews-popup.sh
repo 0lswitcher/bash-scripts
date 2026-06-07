@@ -1,13 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# workspace-previews-popup.sh
+# dependencies: workspace-previews-capture.sh, feh
 
 # configuration
-START_X_LEFT=20          # X position of the first icon on the LEFT monitor
-START_X_RIGHT=1600+20    # X of the first icon on the RIGHT monitor
-START_Y=0                # same vertical position for both monitors
+START_X_LEFT=20       # X position of the first icon on the LEFT monitor
+START_X_RIGHT=1600+20 # X of the first icon on the RIGHT monitor
+START_Y=0             # same vertical position for both monitors
 ICON_WIDTH=33
 ICON_HEIGHT=30
 SPACING=2
-NUM_WORKSPACES=5
+NUM_WORKSPACES=3
 IMAGE_DIR="$HOME/stuff/pictures/workspace-previews"
 FEH_PID_FILE="/tmp/feh_workspace_preview.pid"
 
@@ -29,13 +31,13 @@ function get_hovered_workspace() {
     local bottom=$((top + ICON_HEIGHT))
 
     # left monitor
-    if (( x >= left_l && x <= right_l && y >= top && y <= bottom )); then
+    if ((x >= left_l && x <= right_l && y >= top && y <= bottom)); then
       echo $((i + 1))
       return
     fi
 
     # right monitor
-    if (( x >= left_r && x <= right_r && y >= top && y <= bottom )); then
+    if ((x >= left_r && x <= right_r && y >= top && y <= bottom)); then
       echo $((i + 1))
       return
     fi
@@ -55,13 +57,13 @@ function show_preview() {
   # show new preview if image exists
   if [[ -f "$image_path" ]]; then
     feh --title "preview_${workspace_id}" --geometry 400x225+20+45 --scale-down "$image_path" &
-    echo $! > "$FEH_PID_FILE"
+    echo $! >"$FEH_PID_FILE"
   fi
 }
 
 # main loop
 while true; do
-  read -r x y <<< "$(hyprctl cursorpos | awk '{print int($1), int($2)}')"
+  read -r x y <<<"$(hyprctl cursorpos | awk '{print int($1), int($2)}')"
 
   # skip if mouse hasn't moved
   if [[ "$x" == "$last_x" && "$y" == "$last_y" ]]; then

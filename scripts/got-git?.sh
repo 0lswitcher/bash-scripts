@@ -20,18 +20,26 @@ for dir in "$BASE_DIR"/*; do
     cd "$dir" || continue
 
     if [ -d ".git" ]; then
-      echo -e "${CYAN} $(basename "$dir")${RESET} ${GREEN}[git repo]${RESET}"
+      echo -e "${CYAN}  $(basename "$dir")${RESET} ${GREEN}[git repo]${RESET}"
 
       branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
       status=$(git status -s)
+      uncommitted=$(echo "$status" | grep -v "^??" || true)
+      untracked=$(echo "$status" | grep "^??" || true)
 
       echo -e "     Branch: ${BOLD}$branch${RESET}"
 
       if [ -z "$status" ]; then
-        echo -e "   ${GREEN} Clean (no changes)${RESET}"
+        echo -e "   ${GREEN}  Clean (no changes)${RESET}"
       else
-        echo -e "   ${YELLOW} Uncommitted changes:${RESET}"
-        echo "$status" | sed "s/^/      /"
+        if [ -n "$uncommitted" ]; then
+          echo -e "   ${YELLOW}  Uncommitted changes:${RESET}"
+          echo "$uncommitted" | sed "s/^/      /"
+        fi
+        if [ -n "$untracked" ]; then
+          echo -e "   ${YELLOW}  Untracked files:${RESET}"
+          echo "$untracked" | sed "s/^/      /"
+        fi
       fi
 
       git fetch --quiet 2>/dev/null
@@ -45,11 +53,11 @@ for dir in "$BASE_DIR"/*; do
         echo -e "   ${RED}↓ $behind commits behind remote${RESET}"
       fi
       if [ "$ahead" -eq 0 ] && [ "$behind" -eq 0 ]; then
-        echo -e "   ${GREEN} Up to date with remote${RESET}"
+        echo -e "   ${GREEN}  Up to date with remote${RESET}"
       fi
       echo
     else
-      echo -e "${CYAN} $(basename "$dir")${RESET} ${RED}[not a git repo]${RESET}"
+      echo -e "${CYAN}  $(basename "$dir")${RESET} ${RED}[not a git repo]${RESET}"
       echo
     fi
   fi

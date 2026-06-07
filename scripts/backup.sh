@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# backup.sh - versatile backup for a selection of directories, or custom choice
 
 DATE=$(date +%m.%d.%Y)
 

@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# cya-downloads.sh - get rid of persistent Downloads/downloads folder with backup
 
 # define directories
 DOWNLOADS_DIR="/home/y2k/Downloads"
