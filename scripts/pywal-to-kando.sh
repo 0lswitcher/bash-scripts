@@ -2,17 +2,21 @@
 # pywal-to-kando.sh - convert pywal theme to kando theme
 # dependencies:  pywal, kando, jq
 
-# note: to use this script without the flatpak version of kando,
-#       comment out line 14 and uncomment line 11.
-#       also see end of script for reloading kando's theme.
-
 WAL_COLORS="$HOME/.cache/wal/colors.json"
+CONFIG_FILE=""
 
-# version for native install
-CONFIG_FILE="$HOME/.config/kando/config.json"
+# func to check if using flatpak install
+check_for_flatpak() {
+  FLATPAK_APPID="menu.kando.Kando"
+  flatpak info "$FLATPAK_APPID" >/dev/null 2>&1
+}
 
-# version for flatpak install
-# CONFIG_FILE="$HOME/.var/app/menu.kando.Kando/config/kando/config.json"
+# check install method
+if check_for_flatpak; then
+  CONFIG_FILE="$HOME/.var/app/menu.kando.Kando/config/kando/config.json"
+else
+  CONFIG_FILE="$HOME/.config/kando/config.json"
+fi
 
 # check if the colors.json file exists
 if [ ! -f "$WAL_COLORS" ]; then
@@ -54,9 +58,15 @@ jq --arg c1 "$c1" --arg c2 "$c2" --arg c3 "$c3" --arg c4 "$c4" \
     "text-color": $fg
   }' "$CONFIG_FILE" >/tmp/kando-config.json && mv /tmp/kando-config.json "$CONFIG_FILE"
 
-# kill and reopen kando instance
-kando --reload-menu-theme
-#sleep 2s && setsid kando >/dev/null 2>&1 &
-#flatpak kill menu.kando.Kando && setsid flatpak run menu.kando.Kando >/dev/null 2>&1 &
+# reload kando
+if check_for_flatpak; then
+  sleep 2s && 
+  flatpak kill menu.kando.Kando && 
+  setsid flatpak run menu.kando.Kando >/dev/null 2>&1 &
+else
+  kando --reload-menu-theme
+fi
+
 echo "Kando updated!"
+
 #notify-send "Kando updated!" "Pywal colors applied to custom kando theme :)"

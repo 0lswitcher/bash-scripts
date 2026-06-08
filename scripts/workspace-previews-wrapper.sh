@@ -5,5 +5,5 @@
 
 SH_DIR=/home/y2k/stuff/dev/bash/scripts
 
-bash $SH_PATH/workspace-previews-capture.sh &
-bash $SH_PATH/workspace-previews-popup.sh &
+bash -l '"$SH_DIR"/workspace-previews-capture.sh' &
+bash -l '"$SH_DIR"/workspace-previews-popup.sh' &

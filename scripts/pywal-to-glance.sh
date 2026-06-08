@@ -114,10 +114,12 @@ in_theme && /^[a-zA-Z]/ { in_theme = 0 }
 
 rm -f "$tmpfile"
 
-# refresh the firefox window with glance dashboard if it's open
-sleep 3 &&
-  hyprctl dispatch 'hl.dsp.focus({ window = "title:^(.*NeoDash.*)$"})' &&
-  hyprctl dispatch 'hl.dsp.send_shortcut({ mods = "CTRL", key = "r", window = "title:^(.*NeoDash.*)$"})'
+# check for hyprland, then refresh the firefox window with glance dashboard if it's open
+if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+    sleep 0.75 &&
+      hyprctl dispatch 'hl.dsp.focus({ window = "title:^(.*NeoDash.*)$"})' &&
+      hyprctl dispatch 'hl.dsp.send_shortcut({ mods = "CTRL", key = "r", window = "title:^(.*NeoDash.*)$"})'
+fi
 
 echo "Glance updated!"
 

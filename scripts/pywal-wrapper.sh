@@ -55,7 +55,7 @@ if pgrep "pcmanfm-qt" >/dev/null; then
   echo "File Explorer updated!" "Pywal colors applied to custom qt6ct -> pcmanfm-qt theme :)"
 fi
 
-if hyprctl clients | grep obsidian >/dev/null; then
+if pgrep -f "obsidian" >/dev/null; then
   xdg-open "obsidian://advanced-uri?vault=vault&commandid=obsidian-pywal-theme:reload-pywal-theme"
   # notify-send "Obsidian updated!" "Pywal colors applied to custom obsidian theme :)"
   echo "Obsidian updated!" "Pywal colors applied to custom obsidian theme :)"

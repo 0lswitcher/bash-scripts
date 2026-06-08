@@ -81,12 +81,9 @@ fi
 # set the background w/ awww (swww has been deprecated)
 awww img "$BACKGROUND_DIR/$selected" --transition-type grow --transition-pos 950,0 --transition-step 255 --transition-fps 60 --transition-duration 2.5
 
-# check if notify-send exists before running it
-if command -v notify-send >/dev/null 2>&1; then
-  notify-send "Background Updated :)"
-else
-  echo "Background Updated :)"
-fi
+notify-send "Background Updated :)"
+
+echo "Background Updated :)"
 
 # updated cached file w/ current image dir
 echo "$BACKGROUND_DIR/$selected" >~/.cache/current-awww-img
@@ -97,5 +94,7 @@ echo "$BACKGROUND_DIR/$selected" >~/.cache/current-awww-img
 if command -v pcmanfm-qt >/dev/null 2>&1; then
   pcmanfm-qt --set-wallpaper "$BACKGROUND_DIR/$selected"
 fi
+
+echo "pcmanfm-qt Background Updated :)"
 
 cleanup

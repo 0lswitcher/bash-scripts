@@ -30,9 +30,6 @@
 > The story behind this is both hilarious and tragic-and I highly encourage you to go read the blog post \
 > regarding the renaming: [Renaming swww](https://www.lgfae.com/posts/2025-10-29-RenamingSwww.html)  \
 > \
-> Finally standardized POSIX compliance so everything is more portable, pure, and theoretically faster.
-> > *I now question my naming of the repo...may have to rename to posix or shell-scripts...*
-
 > [!WARNING]
 > Please refrain from using nix-bootstrap.sh on a machine you care about until I verify this build \
 > on multiple machines. As of now consider it in beta. Thanks!
@@ -209,17 +206,17 @@ with `SSHFS` instead of temporarily accessing w/ `SFTP` so that the script can r
 
 # Pywal to Kando
 Converts pywal theme to kando theme. \
-Compatable with flatpak and non-flatpak installations, just comment or uncomment lines 11 and 14 accordingly.  
-- *Set to non-flatpak/native by default*  
-
-You may also have to change the final lines of the script that handle the reloading of Kando. \
-It's in my to-do list to make this handling conditional and automatic, so stay tuned for that.
+**Should be** compatible with all Kando installation methods (APT, Flatpak, nixpkgs, AUR, etc.)
 
 # Pywal to Spicetify
 Converts pywal theme to modified 'text' spicetify theme. \
-I'm biased, but it looks especially great with my [custom text theme](https://github.com/0lswitcher/dotfiles/tree/main/spicetify/.config/spicetify/Themes/text).  
- - *I'm moving the spicetify theme to its own repo and publishing it to the marketplace soon,  
- so stay tuned for that!*  
+I'm biased, but it looks especially great with my custom theme: [SpotNeoTify](https://github.com/0lswitcher/spotneotify).  
+> [!TIP]
+> SpotNeoTify is now available on the Spicetify Marketplace!  
+  
+Compatible with most Spotify installation methods, excluding Snap and Homebrew. \
+To use with either of these installation methods, please manually configure the file paths. \
+I'll update the script to check for these methods automatically soon!
 
 # Pywal Wrapper
 What allows the newly set theme to be smoothly updated across all programs in real time. \

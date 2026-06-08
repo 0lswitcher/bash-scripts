@@ -2,12 +2,15 @@
 # pywal-to-spicetify.sh - convert pywal theme to spicetify theme
 # dependencies: pywal, spotify, spicetify, jq
 
-# note: to use this script without the flatpak version of spotify,
-#       edit the final block to reference the non-flatpak variants.
-
 WAL_COLORS="$HOME/.cache/wal/colors.json"
 COLOR_INI="$HOME/.config/spicetify/Themes/text/color.ini"
 SECTION="[Pywal]"
+
+# func to check if using flatpak install
+check_for_flatpak() {
+  FLATPAK_APPID="com.spotify.Client"
+  flatpak info "$FLATPAK_APPID" >/dev/null 2>&1
+}
 
 # check if the colors.json file exists
 if [ ! -f "$WAL_COLORS" ]; then
@@ -57,21 +60,42 @@ sed -i '/^\[Pywal\]/,/^\[.*\]/d' "$COLOR_INI"
 # append new [Pywal] section
 cat /tmp/pywal_spicetify.ini >>"$COLOR_INI"
 
-# set the color scheme
-spicetify config color_scheme Pywal
+# set the color scheme (deprecated in favor of live refresh, still here if u need it)
+#spicetify config color_scheme Pywal
 
-# apply it
-spicetify apply
+# reloads color.ini and user.css
+spicetify refresh
 
-# change me if using non-flatpak installation!
-if pgrep "spotify" >/dev/null; then
-  # close spotify instance if one is open
-  flatpak kill com.spotify.Client
-  # delete old spotify singletons jik
-  find "$HOME/.var/app/com.spotify.Client/cache/spotify/" -name 'Singleton*' -delete
+# apply it (deprecated in favor of live refresh, still here if u need it)
+#spicetify apply
 
-  # open spotify
-  setsid flatpak run com.spotify.Client >/dev/null 2>&1 &
+# checks if spotify is open, if not-cya!
+if ! pgrep "spotify" >/dev/null; then
   echo "Spotify updated!"
   #notify-send "Spotify updated!" "Pywal colors applied to custom spicetify theme :)"
+  exit 0
 fi
+
+# if spotify is open, check for version and refresh accordingly
+
+# check for hyprland (refresh)
+if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+  hyprctl dispatch 'hl.dsp.focus({ window = "class:^(.*Spotify.*)$"})' &&
+  hyprctl dispatch 'hl.dsp.send_shortcut({ mods = "CTRL+SHIFT", key = "r", window = "class:^(.*Spotify.*)$"})' 
+  exit 0
+fi
+
+# check for flatpak (close n re-open)
+if check_for_flatpak; then
+  flatpak kill com.spotify.Client 2>/dev/null &&
+  # delete old spotify singletons jik
+  find "$HOME/.var/app/com.spotify.Client/cache/spotify/" -name 'Singleton*' -delete 2>/dev/null
+  setsid flatpak run com.spotify.Client >/dev/null 2>&1 &
+else # assume native installation (close n re-open)
+  pkill -f spotify 2>/dev/null
+  setsid spotify >/dev/null 2>&1 &
+fi
+
+echo "Spotify updated!"
+
+#notify-send "Spotify updated!" "Pywal colors applied to custom spicetify theme :)"
