@@ -22,14 +22,12 @@
 
 <br>
 
-<a href="#scripts-overview"><kbd> <br> Scripts Overview <br> </kbd></a>&ensp;&ensp;
-<a href="#key-info"><kbd> <br> Key Info <br> </kbd></a>&ensp;&ensp;
-<a href="#license"><kbd> <br> License <br> </kbd></a>&ensp;&ensp;
-<a href="#contributing"><kbd> <br> Contributing <br> </kbd></a>&ensp;&ensp;
+<a href="#scripts-overview"><kbd>&emsp;<br>&emsp;Scripts Overview&emsp;<br>&emsp;</kbd></a>&ensp;&ensp;
+<a href="#key-info"><kbd>&emsp;<br>&emsp;Key Info&emsp;<br>&emsp;</kbd></a>&ensp;&ensp;
+<a href="#license"><kbd>&emsp;<br>&emsp;License&emsp;<br>&emsp;</kbd></a>&ensp;&ensp;
+<a href="#contributing"><kbd>&emsp;<br>&emsp;Contributing&emsp;<br>&emsp;</kbd></a>&ensp;&ensp;
 
 </div>
-
----
 
 > [!TIP]
 > **Updates:** \
