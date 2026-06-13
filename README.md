@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="https://github.com/0lswitcher/bash-scripts/blob/main/md-assets/bash.png"
+  <img src="md-assets/bash.png"
    style="width: 25%; height: 25%">
 </p>
 
@@ -16,6 +16,19 @@
   All code is licensed under the <a href="LICENSE">Unlicense License</a>. (do whatever u want idc)
 </p>
 
+<h1></h1>
+
+<div align="center">
+
+<br>
+
+<a href="#scripts-overview"><kbd> <br> Scripts Overview <br> </kbd></a>&ensp;&ensp;
+<a href="#key-info"><kbd> <br> Key Info <br> </kbd></a>&ensp;&ensp;
+<a href="#license"><kbd> <br> License <br> </kbd></a>&ensp;&ensp;
+<a href="#contributing"><kbd> <br> Contributing <br> </kbd></a>&ensp;&ensp;
+
+</div>
+
 ---
 
 > [!TIP]
@@ -28,8 +41,8 @@
 > \
 > Replaced all instances of `swww` w/ `awww` due to LGFae (*the creator of `swww`*) renaming the project. \
 > The story behind this is both hilarious and tragic-and I highly encourage you to go read the blog post \
-> regarding the renaming: [Renaming swww](https://www.lgfae.com/posts/2025-10-29-RenamingSwww.html)  \
-> \
+> regarding the renaming: [Renaming swww](https://www.lgfae.com/posts/2025-10-29-RenamingSwww.html)
+
 > [!WARNING]
 > Please refrain from using nix-bootstrap.sh on a machine you care about until I verify this build \
 > on multiple machines. As of now consider it in beta. Thanks!
@@ -101,7 +114,7 @@ bash-scripts/
 └── README.md 
 ```
 
----
+<a id="scripts-overview"></a>
 
 ## Script's Overview
 
@@ -125,7 +138,7 @@ bash-scripts/
 | [workspace-previews-popup.sh](scripts/workspace-previews-popup.sh) | Mini workspace previews (display popups) | feh, workspace-previews-capture.sh |
 | [workspace-previews-wrapper.sh](scripts/workspace-previews-wrapper.sh) | Mini workspace previews (wrapper) | workspace-previews-capture.sh, workspace-previews-popup.sh |
 
----
+<a id="key-info"></a>
 
 > [!TIP]
 > Read below for important information regarding each script.
@@ -202,7 +215,9 @@ For a more verbose writeup on `nix-bootstrap.sh`, please visit [my nixfiles repo
 # Pywal to Glance (Self-Hosted Server Dashboard)
 Updates your glance server dashboard default colorscheme with your pywal theme. \
 If your server is hosted on a headless machine that you SSH into like me, you'll need to have the filsystem mounted \
-with `SSHFS` instead of temporarily accessing w/ `SFTP` so that the script can read your `glance.yml` file.
+with `SSHFS` instead of temporarily accessing w/ `SFTP` so that the script can read your `glance.yml` file. \
+\
+Please set the `GLANCE_CONFIG` variable to your `glance.yml` before launching.
 
 # Pywal to Kando
 Converts pywal theme to kando theme. \
@@ -256,12 +271,13 @@ These two scripts (`workspace-previews-capture.sh` & `workspace-previews-popup.s
 > Hyprshot simply needs some extra configuration to not copy the screenshot to the system clipboard.  
 > Hope this helps!
 
----
+
+<a id="license"></a>
 
 ## License
 This repository is licensed under the [Unlicense License](LICENSE). (do whatever u want idc)
 
----
+<a id="contributing"></a>
 
 ## Contributing
 1. Fork the repo  
