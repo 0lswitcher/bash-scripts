@@ -27,9 +27,9 @@ run() {
 # logging
 LOG_FILE="/tmp/nix-bootstrap.log"
 exec > >(tee -a "$LOG_FILE") 2>&1
-echo "── nix-bootstrap started at $(date) ──"
+echo "--- nix-bootstrap started at $(date) ---"
 [[ $DEV_MODE -eq 1 ]] && echo "[dev mode active]"
-[[ $DRY_RUN -eq 1 ]] && echo "[dry-run mode active — no destructive commands will execute]"
+[[ $DRY_RUN -eq 1 ]] && echo "[dry-run mode active - no destructive commands will execute]"
 
 # trap - fires on any non-zero exit, prints the line number and points to the log
 trap 'echo ""; echo "Bootstrap failed at line $LINENO. Check $LOG_FILE for details."' ERR
@@ -42,11 +42,11 @@ fi
 
 # vars
 REPO_DIR="/tmp/nix-bootstrap"
+NIXOS_DIR="/etc/nixos"
 DOTFILES_REPO="https://github.com/0lswitcher/dotfiles.git"
 DOTFILES_PRIVATE_REPO="https://github.com/0lswitcher/dotfiles-private.git"
 NIXFILES_REPO="https://github.com/0lswitcher/nixfiles.git"
 WALLPAPERS_REPO="https://github.com/0lswitcher/wallpapers.git"
-NIXOS_DIR="/etc/nixos"
 
 # functions
 prompt() {
@@ -163,7 +163,7 @@ echo "Selected username: $TARGET_USER"
 
 # define final dotfiles location (set to $HOME so GNU Stow can be used)
 DOTFILES_DIR_FINAL="/home/$TARGET_USER/dotfiles"
-DOTFILES_PRIVATE_DIR="/home/$TARGET_USER/dotfiles-private" # (dev mode only)
+DOTFILES_PRIVATE_DIR_FINAL="/home/$TARGET_USER/dotfiles-private" # (dev mode only)
 
 # hostname prompt
 read -rp "Enter the new hostname for your machine (not to be confused w/ username): " TARGET_HOST
@@ -175,7 +175,7 @@ echo "Selected hostname: $TARGET_HOST"
 
 # wallpaper prompt (skipped in dev mode)
 if [[ $DEV_MODE -eq 1 ]]; then
-  echo "[dev] Skipping wallpaper prompt - pulling automatically..."
+  echo "[dev] Skipping wallpaper prompt - Pulling automatically..."
   BG_PULL="Hell yeah"
 else
   BG_PULL=$(prompt "Would you like to include my wallpaper collection in your final build?" "Hell yeah" "Fuck no")
@@ -253,7 +253,13 @@ fi
 echo "Applying dotfiles for $HW_TYPE to future user $TARGET_USER..."
 TARGET_USER_HOME="/home/$TARGET_USER"
 
+# transfer dots from pre-rebuild to post-rebuild dir
+echo "Checking $TARGET_USER_HOME/.config dir exists..."
 run sudo mkdir -p "$TARGET_USER_HOME/.config"
+echo "Checking $TARGET_USER_HOME"/dotfiles dir exists..."
+run sudo mkdir -p "$TARGET_USER_HOME/dotfiles"
+echo "Copying dots from $REPO_DIR/dotfiles to $DOTFILES_DIR_FINAL..."
+run sudo cp -r "$REPO_DIR"/dotfiles" "$DOTFILES_DIR_FINAL"
 
 # full list of stow packages
 STOW_PACKAGES=(btop cava fastfetch foot hypr kando laptop-specific micro nvim ranger spicetify theming ulauncher waybar)
@@ -289,11 +295,16 @@ done
 # apply private dotfiles via stow (dev mode only)
 if [[ $DEV_MODE -eq 1 && -d "$REPO_DIR/dotfiles-private" ]]; then
   echo "[dev] Stowing private dotfiles..."
+  echo "Checking $TARGET_USER_HOME"/dotfiles-private dir exists..."
+  run sudo mkdir -p "$TARGET_USER_HOME/dotfiles-private
+  echo "Copying dots from $REPO_DIR/dotfiles-private to $DOTFILES_PRIVATE_DIR_FINAL..."
+  run sudo cp -r "$REPO_DIR/dotfiles-private" "$DOTFILES_PRIVATE_DIR_FINAL"
+
   # stow each package found in dotfiles-private
-  for pkg in "$DOTFILES_PRIVATE_DIR"/*/; do
+  for pkg in "$DOTFILES_PRIVATE_DIR_FINAL"/*/; do
     pkg=$(basename "$pkg")
     echo "[dev] Stowing private package: $pkg..."
-    run sudo stow -d "$DOTFILES_PRIVATE_DIR" -t "$TARGET_USER_HOME" "$pkg"
+    run sudo stow -d "$DOTFILES_PRIVATE_DIR_FINAL" -t "$TARGET_USER_HOME" "$pkg"
   done
 fi
 
@@ -323,14 +334,18 @@ echo ""
 echo "If you're using an Nvidia GPU, take a look at the Nvidia section of the README from my nixfiles repo before proceeding:"
 echo "https://github.com/0lswitcher/nixfiles"
 echo "Nvidia GPUs + Linux + Hyprland = Hell, but it's easy to maintain once you get it up and running. Just get ready for some troubleshooting to start."
+echo "Look for commented sections of code in /etc/nixos/base.nix, and in ~/.config/hypr/hyprland.lua, uncomment these for a quick Nvidia configuration."
+echo "You will also likely have to comment out the line in /etc/nixos/base.nix for pulling the latest linux kernel, as this commonly breaks Nvidia drivers."
 echo ""
 if [ "$INSTALL_TYPE" = "Full" ]; then
   echo "Don't forget to add 'docker' to extraGroups in base.nix!"
 else
   echo "Don't forget to add 'docker' to extraGroups in base.nix if you ever decide to enable it!"
+  echo ""
 fi
+echo "Theming will likely be incomplete until Pywal colors are generated once, so please do so at your nearest convenience either manually or with my scripts."
 echo ""
 echo "  Enjoy :) "
 echo ""
-echo "-- nix-bootstrap finished at $(date) --"
+echo "--- nix-bootstrap finished at $(date) ---"
 echo "Full log saved to $LOG_FILE"
