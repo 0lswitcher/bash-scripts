@@ -4,11 +4,13 @@
    style="width: 25%; height: 25%">
 </p>
 
+<br>
+
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=100&duration=2500&pause=1000&color=B277F7&center=true&vCenter=true&width=1920&height=100&lines=0lswitcher's+Bash+Scripts)](https://git.io/typing-svg)
 
 <h1></h1>
 
-<p align="center">
+<p align="center"><br>
   My personal collection of bash scripts I use on a regular basis.<br>
   <br>
   Kinda lazy sometimes so POSIX compliance is dependant on how much effort I felt like putting in that day.<br>
