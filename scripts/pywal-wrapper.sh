@@ -55,8 +55,17 @@ if pgrep "pcmanfm-qt" >/dev/null; then
   echo "File Explorer updated!" "Pywal colors applied to custom qt6ct -> pcmanfm-qt theme :)"
 fi
 
+if pgrep "ulauncher" >/dev/null; then
+  pkill -f ulauncher
+  # notify-send "ulauncher updated!" "Pywal colors applied to custom ulauncher theme :)"
+  echo "Ulauncher updated!" "Pywal colors applied to custom ulauncher theme :)"
+fi
+
 if pgrep -f "obsidian" >/dev/null; then
   xdg-open "obsidian://advanced-uri?vault=vault&commandid=obsidian-pywal-theme:reload-pywal-theme"
   # notify-send "Obsidian updated!" "Pywal colors applied to custom obsidian theme :)"
   echo "Obsidian updated!" "Pywal colors applied to custom obsidian theme :)"
 fi
+
+# clean exit since obsidian likes to throw non-fatal errors
+exit 0
