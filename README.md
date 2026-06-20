@@ -219,6 +219,8 @@ with `SSHFS` instead of temporarily accessing w/ `SFTP` so that the script can r
 \
 Please set the `GLANCE_CONFIG` variable to your `glance.yml` before launching.
 
+For previews and further installation/usage information, please see [my dedicated pywal-glance-theme repository](https://github.com/0lswitcher/pywal-glance-theme)
+
 # Pywal to Kando
 Converts pywal theme to kando theme. \
 **Should be** compatible with all Kando installation methods (APT, Flatpak, nixpkgs, AUR, etc.)
