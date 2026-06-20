@@ -256,10 +256,10 @@ TARGET_USER_HOME="/home/$TARGET_USER"
 # transfer dots from pre-rebuild to post-rebuild dir
 echo "Checking $TARGET_USER_HOME/.config dir exists..."
 run sudo mkdir -p "$TARGET_USER_HOME/.config"
-echo "Checking $TARGET_USER_HOME"/dotfiles dir exists..."
+echo "Checking $TARGET_USER_HOME/dotfiles dir exists..."
 run sudo mkdir -p "$TARGET_USER_HOME/dotfiles"
 echo "Copying dots from $REPO_DIR/dotfiles to $DOTFILES_DIR_FINAL..."
-run sudo cp -r "$REPO_DIR"/dotfiles" "$DOTFILES_DIR_FINAL"
+run sudo cp -r "$REPO_DIR/dotfiles" "$DOTFILES_DIR_FINAL"
 
 # full list of stow packages
 STOW_PACKAGES=(btop cava fastfetch foot hypr kando laptop-specific micro nvim ranger spicetify theming ulauncher waybar)
@@ -295,8 +295,8 @@ done
 # apply private dotfiles via stow (dev mode only)
 if [[ $DEV_MODE -eq 1 && -d "$REPO_DIR/dotfiles-private" ]]; then
   echo "[dev] Stowing private dotfiles..."
-  echo "Checking $TARGET_USER_HOME"/dotfiles-private dir exists..."
-  run sudo mkdir -p "$TARGET_USER_HOME/dotfiles-private
+  echo "Checking $TARGET_USER_HOME/dotfiles-private dir exists..."
+  run sudo mkdir -p "$TARGET_USER_HOME/dotfiles-private"
   echo "Copying dots from $REPO_DIR/dotfiles-private to $DOTFILES_PRIVATE_DIR_FINAL..."
   run sudo cp -r "$REPO_DIR/dotfiles-private" "$DOTFILES_PRIVATE_DIR_FINAL"
 
