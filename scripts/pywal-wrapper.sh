@@ -23,9 +23,10 @@ if pgrep "waypaper" >/dev/null; then
   fi
 fi
 
-bash -l '/home/y2k/stuff/dev/bash/scripts/pywal-to-kando.sh' &
-bash -il '/home/y2k/stuff/dev/bash/scripts/pywal-to-glance.sh' &
-bash -il '/home/y2k/stuff/dev/bash/scripts/pywal-to-spicetify.sh' &
+bash -l "$HOME/stuff/dev/bash/scripts/pywal-to-kando.sh" &
+bash -il "$HOME/stuff/dev/bash/scripts/pywal-to-glance.sh" &
+bash -il "$HOME/stuff/dev/bash/scripts/pywal-to-spicetify.sh" &
+bash -l "$HOME/.config/zed/zed-theme-wal-repo/pywal-to-zed.sh" --mode readability &
 
 if pgrep "waybar" >/dev/null; then
   pkill -f waybar && setsid waybar >/dev/null 2>&1 &
